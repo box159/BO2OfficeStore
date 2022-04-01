@@ -14,13 +14,14 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 public class Guiclick implements Listener {
     final static String menu = ChatColor.WHITE+ "\uF807\uF801";
     final static String buypage = ChatColor.GREEN + "購買介面";
     final static String sellpage = org.bukkit.ChatColor.YELLOW + "賣出介面";
-    private static HashMap<Material, Integer> bprice = Buy.getBprice();
-    private static HashMap<Material, Integer> sprice = Sell.getSprice();
+    private static final HashMap<Material, Integer> bprice = Buy.getBprice();
+    private static final HashMap<Material, Integer> sprice = Sell.getSprice();
 
     @EventHandler
     public void click(InventoryClickEvent e){
@@ -44,17 +45,16 @@ public class Guiclick implements Listener {
             Material material = e.getCurrentItem().getType();
 
             if (material.equals(Material.BEACON)) {
-                Character type = null;
-                int price = 0;
-
-                if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GOLD + "小範圍區加載器")){
-                    //tmaterial = Material.SLIME_SPAWN_EGG;
+                char type;
+                int price ;
+                if (Objects.requireNonNull(e.getCurrentItem().getItemMeta()).getDisplayName().equalsIgnoreCase(ChatColor.GOLD + "小範圍區加載器")){
                     type = 's';
-                    price = 2000;}
+                    price = 2000;
+                }
                 else if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GOLD + "中範圍區加載器")) {
                     type = 'm';
                     price = 4000;}
-                else if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GOLD + "大範圍區加載器")){
+                else {
                     type = 'l';
                     price = 6000;}
                 if (eco.getBalance(player) >= price) {
@@ -63,8 +63,7 @@ public class Guiclick implements Listener {
                         Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(),"loader give " + player.getName() + " normal_loader ");
                     else if (type == 'm')
                         Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(),"loader give " + player.getName() + " medium_loader ");
-                    else if (type == 'l')
-                        Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(),"loader give " + player.getName() + " large_loader ");
+                    else Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(),"loader give " + player.getName() + " large_loader ");
                     player.sendMessage("購買成功!");
                     /*if (material.equals(Material.SLIME_SPAWN_EGG))
                         Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(),"loader give " + player.getName() + " normal_loader ");
@@ -83,7 +82,7 @@ public class Guiclick implements Listener {
                 }
                 if (eco.getBalance(player) >= bprice.get(material)*count) {
                     eco.withdrawPlayer(player, bprice.get(material)*count);
-                    player.getInventory().addItem(new ItemStack(material));
+                    player.getInventory().addItem(new ItemStack(material,count));
                     player.sendMessage("購買成功!");
                 } else {
                     player.closeInventory();
@@ -109,7 +108,6 @@ public class Guiclick implements Listener {
                 } else {
                     player.closeInventory();
                     player.sendMessage(ChatColor.RED + "您沒有足夠的物品!");
-
                 }
             }
             e.setCancelled(true);
