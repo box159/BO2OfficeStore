@@ -1,0 +1,10 @@
+name: BO2OfficalStore
+version: '${project.version}'
+main: me.box159.BO2officalstore.OfficalStore
+api-version: 1.18
+prefix:  BO2
+authors: [ box159 ]
+description: BO2 Offical store
+commands:
+  store:
+    usage: /<commands>
