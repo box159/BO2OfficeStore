@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Buy {
-    private static HashMap<Material, Integer> bprice = new HashMap<>();
+    private static final HashMap<Material, Integer> bprice = new HashMap<>();
 
     static final int slots = 27;
 
@@ -25,15 +25,17 @@ public class Buy {
         bprice.put(Material.EMERALD,35);
         bprice.put(Material.LAPIS_LAZULI,30);
         bprice.put(Material.REDSTONE_BLOCK,30);
+        bprice.put(Material.COAL_BLOCK,30);
 
         Inventory gui = Bukkit.createInventory(p,slots, ChatColor.GREEN + "購買介面");
         ItemStack[] items = new ItemStack[27];
         items[0] = new ItemStack(Material.IRON_INGOT);
         items[1] = new ItemStack(Material.LAPIS_LAZULI);
         items[2] = new ItemStack(Material.REDSTONE_BLOCK);
-        items[3] = new ItemStack(Material.GOLD_INGOT);
-        items[4] = new ItemStack(Material.EMERALD);
-        items[5] = new ItemStack(Material.DIAMOND);
+        items[3] = new ItemStack(Material.COAL_BLOCK);
+        items[4] = new ItemStack(Material.GOLD_INGOT);
+        items[5] = new ItemStack(Material.EMERALD);
+        items[6] = new ItemStack(Material.DIAMOND);
         items[9] = new ItemStack(Material.BEACON);
         items[10] = new ItemStack(Material.BEACON);
         items[11] = new ItemStack(Material.BEACON);
@@ -43,9 +45,10 @@ public class Buy {
         ItemMeta metaI = items[0].getItemMeta();
         ItemMeta metaL = items[1].getItemMeta();
         ItemMeta metaR = items[2].getItemMeta();
-        ItemMeta metaGO = items[3].getItemMeta();
-        ItemMeta metaE = items[4].getItemMeta();
-        ItemMeta metaD = items[5].getItemMeta();
+        ItemMeta metaCO= items[3].getItemMeta();
+        ItemMeta metaGO = items[4].getItemMeta();
+        ItemMeta metaE = items[5].getItemMeta();
+        ItemMeta metaD = items[6].getItemMeta();
         ItemMeta metac1 = items[9].getItemMeta();
         ItemMeta metac2 = items[10].getItemMeta();
         ItemMeta metac3 = items[11].getItemMeta();
@@ -121,12 +124,19 @@ public class Buy {
         lore12.add("右鍵購買64個");
         metaN.setLore(lore12);
 
+        ArrayList<String> lore13 = new ArrayList<>();
+        lore13.add("價格： 30 元");
+        lore13.add("左鍵購買1個");
+        lore13.add("右鍵購買64個");
+        metaCO.setLore(lore13);
+
         items[0].setItemMeta(metaI);
         items[1].setItemMeta(metaL);
         items[2].setItemMeta(metaR);
-        items[3].setItemMeta(metaGO);
-        items[4].setItemMeta(metaE);
-        items[5].setItemMeta(metaD);
+        items[3].setItemMeta(metaCO);
+        items[4].setItemMeta(metaGO);
+        items[5].setItemMeta(metaE);
+        items[6].setItemMeta(metaD);
         items[9].setItemMeta(metac1);
         items[10].setItemMeta(metac2);
         items[11].setItemMeta(metac3);
